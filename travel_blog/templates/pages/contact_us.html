@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Связаться с нами</h4>
+                <h2>Давайте оставаться на связи!</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+<section class="contact-us">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-12">
+            <div class="down-contact">
+              <div class="row">
+                <div class="col-lg-8">
+                  <div class="sidebar-item contact-form">
+                    <div class="sidebar-heading">
+                      <h2>Напишите свое сообщение</h2>
+                    </div>
+                    <div class="content">
+                      <form id="contact" action="" method="post">
+                          {% csrf_token %}
+                        <div class="row">
+                          <div class="col-md-6 col-sm-12">
+                            {{ form.name }}
+                          </div>
+                          <div class="col-md-6 col-sm-12">
+                            {{ form.email }}
+                          </div>
+                          <div class="col-md-12 col-sm-12">
+                            {{ form.phone }}
+                          </div>
+                          <div class="col-lg-12">
+                            {{ form.message }}
+                          </div>
+                          <div class="col-lg-12">
+                            <fieldset>
+                              <button type="submit" id="form-submit" class="main-button">Отправить сообщение</button>
+                            </fieldset>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="sidebar-item contact-information">
+                    <div class="sidebar-heading">
+                      <h2>контактная информация</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        <li>
+                          <h5>{{ contacts.number }}</h5>
+                          <span>Номер телефона</span>
+                        </li>
+                        <li>
+                          <h5>{{ contacts.email }}</h5>
+                          <span>Электронная почта</span>
+                        </li>
+                        <li>
+                          <h5>{{ contacts.address }}</h5>
+                          <span>Адрес компании</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div id="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d46786.60581239257!2d74.5680234458156!3d42.86940651592795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389ec9a0360ea95b%3A0x1484f7504c9ac9b4!2sNOVOTEL%20Bishkek%20City%20Center!5e0!3m2!1sru!2skg!4v1723129305441!5m2!1sru!2skg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
