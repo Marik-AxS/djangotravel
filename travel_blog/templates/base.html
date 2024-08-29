@@ -61,12 +61,25 @@ https://templatemo.com/tm-551-stand-blog
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'post_list' %}">Посты</a>
               </li>
-{#              <li class="nav-item">#}
-{#                <a class="nav-link" href="post-details.html">Post Details</a>#}
-{#              </li>#}
-              <li class="nav-item">
+              <li>
+                <li class="nav-item">
                 <a class="nav-link" href="{% url 'contact' %}">Cвязаться</a>
               </li>
+              {% if not request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+              </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Войти</a>
+              </li>
+              {% else %}
+                  <li class="nav-item">
+                <a class="nav-link" href="{% url 'logoutuser' %}">Выйти</a>
+              </li>
+                  <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' user.id %}">Личный кабинет</a>
+              </li>
+              {% endif %}
             </ul>
           </div>
         </div>
@@ -107,6 +120,8 @@ https://templatemo.com/tm-551-stand-blog
     <script src="{% static 'assets/js/slick.js' %}"></script>
     <script src="{% static 'assets/js/isotope.js' %}"></script>
     <script src="{% static 'assets/js/accordions.js' %}"></script>
+
+
 
     <script language = "text/Javascript">
       cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field

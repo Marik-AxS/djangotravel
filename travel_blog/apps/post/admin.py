@@ -24,7 +24,6 @@ class PostAdmin(admin.ModelAdmin):
         'title',
         'category',
         'image',
-        'like',
         'text',
         'created_at',
         'updated_at'

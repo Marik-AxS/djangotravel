@@ -26,6 +26,7 @@
           <div class="col-lg-8">
             <div class="all-blog-posts">
               <div class="row">
+                {% if posts1 %}
                   {% for post in posts1 %}
                 <div class="col-lg-6">
                   <div class="blog-post">
@@ -34,7 +35,7 @@
                     </div>
                     <div class="down-content">
                       <span>{{ post.category.name }}</span>
-                      <a href="post-details.html"><h4>{{ post.title }}</h4></a>
+                      <a href="{% url 'post_details' post.id %}"><h4>{{ post.title }}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{ post.created_at }}</a></li>
                         <li><a href="#">12 Comments</a></li>
@@ -56,13 +57,46 @@
                   </div>
                 </div>
                   {% endfor %}
+                    {% else %}
+                    <p>Ничего не найдено</p>
+                {% endif %}
                 <div class="col-lg-12">
-                  <ul class="page-numbers">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                  </ul>
+                    <!-- Пагинация -->
+                {% if is_paginated %}
+                        <ul class="page-numbers">
+                            {% if page_obj.has_previous %}
+                                <li>
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <span class="page-link">Назад</span>
+                                </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li>
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+                                    <li><a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперед</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">Вперед</span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                {% endif %}
+                <!-- Конец пагинации -->
                 </div>
               </div>
             </div>
@@ -72,8 +106,10 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="sidebar-item search">
-                    <form id="search_form" name="gs" method="GET" action="#">
-                      <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+                    <form id="search_form" method="GET" action="{% url 'post_list' %}">
+                        {{ search_form.query.label_tag  }}
+                            {{ search_form.query }}
+                            <button type="submit" >Поиск</button>
                     </form>
                   </div>
                 </div>
@@ -84,18 +120,12 @@
                     </div>
                     <div class="content">
                       <ul>
-                        <li><a href="post-details.html">
-                          <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
-                          <span>May 31, 2020</span>
+                          {% for post in posts1 %}
+                        <li><a href="{% url 'post_details' post.id %}">
+                          <h5>{{ post.title }}</h5>
+                          <span>{{ post.created_at }}</span>
                         </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
-                          <span>May 28, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
-                          <span>May 14, 2020</span>
-                        </a></li>
+                          {% endfor %}
                       </ul>
                     </div>
                   </div>
@@ -107,12 +137,9 @@
                     </div>
                     <div class="content">
                       <ul>
-                        <li><a href="#">- Nature Lifestyle</a></li>
-                        <li><a href="#">- Awesome Layouts</a></li>
-                        <li><a href="#">- Creative Ideas</a></li>
-                        <li><a href="#">- Responsive Templates</a></li>
-                        <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                        <li><a href="#">- Creative &amp; Unique</a></li>
+                          {% for category in categories %}
+                        <li><a href="#">- {{ category.name }}</a></li>
+                          {% endfor %}
                       </ul>
                     </div>
                   </div>
@@ -124,13 +151,9 @@
                     </div>
                     <div class="content">
                       <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Creative</a></li>
-                        <li><a href="#">HTML5</a></li>
-                        <li><a href="#">Inspiration</a></li>
-                        <li><a href="#">Motivation</a></li>
-                        <li><a href="#">PSD</a></li>
-                        <li><a href="#">Responsive</a></li>
+                          {% for tag in tags %}
+                        <li><a href="#">{{ tag.name }}</a></li>
+                          {% endfor %}
                       </ul>
                     </div>
                   </div>
